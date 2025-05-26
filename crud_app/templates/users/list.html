@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-gray-800 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <a href="{% url 'users.index' %}" class="text-xl font-semibold">{{ APP_NAME }}</a>
+        <nav class="hidden md:flex space-x-6">
+          <a href="#" class="hover:text-emerald-400">Home</a>
+          <a href="{% url 'users.index' %}" class="hover:text-emerald-400 {% if request.resolver_match.view_name in 'users.index,users.create,users.edit' %} text-emerald-400 font-bold {% endif %}">Users</a>
+          <a href="#" class="hover:text-emerald-400">Settings</a>
+        </nav>
+      </div>
+
+      <!-- Profile Menu (Right) -->
+      <div class="relative">
+        <button data-dropdown-toggle class="flex items-center space-x-2 hover:text-emerald-400">
+          <img src="{% if user.details.profile_picture %}{{ user.details.profile_picture.url }}{% else %}/static/default.jpg{% endif %}" alt="Profile" class="w-8 h-8 rounded-full object-cover">
+          <span>{{ user.firstname }}</span>
+          <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg text-gray-800 hidden">
+          <ul>
+            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200">Profile</a></li>
+            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 md:mt-16">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-semibold text-gray-800">Users</h1>
+      <a href="{% url 'users.create' %}" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 shadow-lg transition duration-300 transform hover:scale-105">
+        <i class="fas fa-plus mr-2"></i> Add User
+      </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto divide-y divide-gray-100 text-sm">
+          <thead class="bg-gray-200 text-left text-sm font-semibold text-gray-800 uppercase">
+            <tr>
+              <th class="px-4 py-2 md:px-6 md:py-4 w-12">#</th>
+              <th class="px-4 py-2 md:px-6 md:py-4">Profile</th>
+              <th class="px-4 py-2 md:px-6 md:py-4">First Name</th>
+              <th class="px-4 py-2 md:px-6 md:py-4">Last Name</th>
+              <th class="px-4 py-2 md:px-6 md:py-4 hidden md:table-cell">Telephone</th>
+              <th class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">Country</th>
+              <th class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">State</th>
+              <th class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">City</th>
+              <th class="px-4 py-2 md:px-6 md:py-4 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            {% for user in users %}
+            <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition duration-150 ease-in-out">
+              <td class="px-4 py-2 md:px-6 md:py-4">{{ forloop.counter }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4">
+                <img src="{% if user.details.profile_picture %}{{ user.details.profile_picture.url }}{% else %}/static/default.jpg{% endif %}"
+                alt="Profile"
+                class="w-12 h-12 rounded-full object-cover border-2 border-gray-200">
+              </td>
+              <td id="{{ user.id }}" class="px-4 py-2 md:px-6 md:py-4 font-medium text-gray-800">{{ user.firstname }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 font-medium text-gray-800">{{ user.lastname }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 hidden md:table-cell">{{ user.telephone }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">{{ user.details.country }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">{{ user.details.state }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">{{ user.details.city }}</td>
+              <td class="px-4 py-2 md:px-6 md:py-4 text-center space-x-3 flex justify-center items-center">
+                <a href="{% url 'users.edit' user.id %}" class="text-indigo-600 hover:text-indigo-800 transition duration-200 transform hover:scale-110">
+                  <i class="fas fa-edit text-lg"></i>
+                </a>
+                <a href="{% url 'user.delete' user.id %}" class="text-red-600 hover:text-red-800 transition duration-200 transform hover:scale-110">
+                  <i class="fas fa-trash text-lg"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Profile Dropdown Menu
+    document.querySelector('[data-dropdown-toggle]').addEventListener('click', function(e) {
+      const dropdownMenu = e.target.closest('.relative').querySelector('div');
+      dropdownMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

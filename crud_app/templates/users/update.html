@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update User</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-sm p-8 mt-12 md:mt-16">
+    <!-- Header with Back Button -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">update New User</h2>
+      <a href="{% url 'users.index' %}" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-300 transition duration-200">
+        <i class="fas fa-arrow-left mr-2"></i> Back
+      </a>
+    </div>
+
+    <!-- Form -->
+    <form action="{% url 'users.edit' user.id %}" method="POST" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- First Name -->
+        <div>
+          <label for="first_name" class="block text-sm font-medium text-gray-600">First Name</label>
+          <input type="text" value="{{user.firstname}}" id="first_name" name="first_name" required
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+        <!-- Last Name -->
+        <div>
+          <label for="last_name" class="block text-sm font-medium text-gray-600">Last Name</label>
+          <input type="text"  value="{{user.lastname}}"  id="last_name" name="last_name" required
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+        <!-- Telephone -->
+        <div>
+          <label for="telephone"  class="block text-sm font-medium text-gray-600">Telephone</label>
+          <input type="tel"  value="{{user.telephone}}" id="telephone" name="telephone"
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+        <!-- Profile Picture -->
+        <div>
+            <label for="profile_picture" class="block text-sm font-medium text-gray-600">Profile Picture</label>
+            <input type="file" id="profile_picture" name="profile_picture"
+                   class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 transition duration-200">
+          
+            {% if user.details.profile_picture %}
+              <div class="mt-2">
+                <p class="text-xs text-gray-500">Current file:</p>
+                <img src="{{ user.details.profile_picture.url }}" alt="Current Profile Picture" class="w-16 h-16 mt-1 rounded-full border border-gray-300 object-cover">
+              </div>
+            {% endif %}
+          </div>
+        <!-- Country -->
+        <div>
+          <label for="country" class="block text-sm font-medium text-gray-600">Country</label>
+          <input type="text" value="{{user.details.country}}" id="country" name="country"
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+        <!-- State -->
+        <div>
+          <label for="state" class="block text-sm font-medium text-gray-600">State</label>
+          <input type="text"  value="{{user.details.state}}" id="state" name="state"
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+        <!-- City -->
+        <div>
+          <label for="city" class="block text-sm font-medium text-gray-600">City</label>
+          <input type="text"  value="{{user.details.city}}" id="city" name="city"
+                 class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:ring-indigo-400 focus:border-indigo-400 transition duration-200">
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <div class="pt-4 flex justify-end">
+        <button type="submit"
+                class="inline-flex items-center px-6 py-3 bg-emerald-500 text-white text-sm font-medium rounded-lg hover:bg-emerald-600 transition duration-200">
+          <i class="fas fa-save mr-2"></i> Save User
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
