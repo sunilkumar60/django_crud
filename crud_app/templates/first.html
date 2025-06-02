@@ -1,9 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .main-content {
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
 <body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
 
-<h1>Hello World!</h1>
-<p>Welcome to my first Django project!!</p>
+    <div class="container">
+        <div class="main-content">
+            <h1>Welcome to My Django Project!</h1>
+            <p>This is a sample template showcasing various HTML elements and styling.</p>
+            
+            <h2>Features</h2>
+            <ul>
+                <li>Responsive Design</li>
+                <li>Clean Navigation</li>
+                <li>Modern Styling</li>
+                <li>Easy to Customize</li>
+            </ul>
 
+            <h2>Sample Content</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            
+            <div class="info-box">
+                <h3>Quick Info</h3>
+                <p>Created with Django</p>
+                <p>Last updated: {% now "F j, Y" %}</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 My Django Project. All rights reserved.</p>
+    </footer>
 </body>
 </html>
