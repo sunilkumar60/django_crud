@@ -13,7 +13,7 @@
     <div class="mb-6">
       <h2 class="text-2xl font-bold text-gray-800 text-center">Log In</h2>
     </div>
-
+    {% include "components/alert_component.html" %}
     <!-- Form -->
     <form action="{% url 'users.login' %}" method="POST" class="space-y-6">
       {% csrf_token %}
@@ -39,6 +39,11 @@
         </button>
       </div>
     </form>
+    <!-- Signup Link -->
+    <p class="mt-6 text-center text-sm text-gray-600">
+      Don’t have an account?
+      <a href="{% url 'users.signup' %}" class="text-indigo-600 hover:text-indigo-800 font-semibold">Sign Up</a>
+    </p>
   </div>
 </body>
 </html>

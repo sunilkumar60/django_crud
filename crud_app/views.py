@@ -2,9 +2,11 @@ from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import User, UserDetails
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth.models import User as Auth_User
+from django.contrib.auth import  authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 
 
@@ -83,13 +85,48 @@ def updateUser(request, user_id):
 
 def login(request):
     if request.method == "POST":
-        print(f"POST data: {request.POST}")
-        username = request.POST.get('username')
+        identifier = request.POST.get('username')  # could be username or email
         password = request.POST.get('password')
-        user = authenticate(username=username,password=password)
-        if user is not None:
-            return("user.index")
-        else:
+
+        user = Auth_User.objects.filter(Q(username=identifier) | Q(email=identifier)).first()
+
+        if user is None:
+            messages.error(request, "User does not exist with that username or email.")
             return redirect("users.login")
-    else:
-        return render(request, 'auth/login.html')
+
+        if not user.check_password(password):
+            messages.error(request, "Incorrect password.")
+            return redirect("users.login")
+
+        if not user.is_active:
+            messages.error(request, "This account is inactive.")
+            return redirect("users.login")
+
+        # Authenticate and login
+        user = authenticate(request, username=user.username, password=password)
+        if user:
+            auth_login(request, user)
+            return redirect("users.index")
+        else:
+            messages.error(request, "Authentication failed. Please try again.")
+            return redirect("users.login")
+
+    return render(request, 'auth/login.html')
+    
+def signup(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        user_name = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        c_password = request.POST.get('password_confirm')
+        
+        if password != c_password:
+            messages.error(request, 'Enter same confirm password.')
+            return redirect('users.signup')
+        user = Auth_User.objects.create_user( username = user_name, email = email, password = password, first_name = first_name, last_name = last_name)
+        if(authenticate(request,username = user_name, password = password)):
+            auth_login(request,user)
+            return redirect('users.index')
+    return render(request, "auth/signup.html")

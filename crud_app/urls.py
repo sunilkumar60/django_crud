@@ -8,6 +8,7 @@ urlpatterns = [
     path('user/', include([
         # authentication routes
         path('login', views.login, name="users.login"),
+        path('signup', views.signup, name="users.signup"),
         # user curd routes
         path('', views.users, name="users.index"),
         path('create', views.create, name="users.create"),
