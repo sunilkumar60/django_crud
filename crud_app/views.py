@@ -62,7 +62,7 @@ def create(request):
 @login_required
 def deleteUser(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    users:delete()
+    user.delete()  # Correct way to delete a specific user
     messages.success(request, "User deleted successfully.")
     return redirect("users:index")
 
