@@ -10,7 +10,7 @@ urlpatterns = [
         path('login', views.login, name="users.login"),
         path('signup', views.signup, name="users.signup"),
         # user curd routes
-        path('', views.users, name="users.index"),
+        path('list', views.users, name="users.index"),
         path('create', views.create, name="users.create"),
         path('edit/<int:user_id>', views.updateUser, name="users.edit"),
         path('delete/<int:user_id>', views.deleteUser, name="user.delete")
