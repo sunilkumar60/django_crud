@@ -14,10 +14,10 @@
   <header class="bg-gray-800 text-white shadow-md">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <a href="{% url 'users.index' %}" class="text-xl font-semibold">{{ APP_NAME }}</a>
+        <a href="{% url 'users:index' %}" class="text-xl font-semibold">{{ APP_NAME }}</a>
         <nav class="hidden md:flex space-x-6">
           <a href="#" class="hover:text-emerald-400">Home</a>
-          <a href="{% url 'users.index' %}" class="hover:text-emerald-400 {% if request.resolver_match.view_name in 'users.index,users.create,users.edit' %} text-emerald-400 font-bold {% endif %}">Users</a>
+          <a href="{% url 'users:index' %}" class="hover:text-emerald-400 {% if request.resolver_match.view_name in 'users:index,users:create,users:edit' %} text-emerald-400 font-bold {% endif %}">Users</a>
           <a href="#" class="hover:text-emerald-400">Settings</a>
         </nav>
       </div>
@@ -44,7 +44,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-4xl font-semibold text-gray-800">Users</h1>
-      <a href="{% url 'users.create' %}" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 shadow-lg transition duration-300 transform hover:scale-105">
+      <a href="{% url 'users:create' %}" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 shadow-lg transition duration-300 transform hover:scale-105">
         <i class="fas fa-plus mr-2"></i> Add User
       </a>
     </div>
@@ -82,10 +82,10 @@
               <td class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">{{ user.details.state }}</td>
               <td class="px-4 py-2 md:px-6 md:py-4 hidden lg:table-cell">{{ user.details.city }}</td>
               <td class="px-4 py-2 md:px-6 md:py-4 text-center space-x-3 flex justify-center items-center">
-                <a href="{% url 'users.edit' user.id %}" class="text-indigo-600 hover:text-indigo-800 transition duration-200 transform hover:scale-110">
+                <a href="{% url 'users:edit' user.id %}" class="text-indigo-600 hover:text-indigo-800 transition duration-200 transform hover:scale-110">
                   <i class="fas fa-edit text-lg"></i>
                 </a>
-                <a href="{% url 'user.delete' user.id %}" class="text-red-600 hover:text-red-800 transition duration-200 transform hover:scale-110">
+                <a href="{% url 'users:delete' user.id %}" class="text-red-600 hover:text-red-800 transition duration-200 transform hover:scale-110">
                   <i class="fas fa-trash text-lg"></i>
                 </a>
               </td>

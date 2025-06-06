@@ -15,7 +15,7 @@
     </div>
     {% include "components/alert_component.html" %}
     <!-- Form -->
-    <form action="{% url 'users.login' %}" method="POST" class="space-y-6">
+    <form action="{% url 'users:login' %}" method="POST" class="space-y-6">
       {% csrf_token %}
       <div class="space-y-4">
         <!-- Username -->
@@ -42,7 +42,7 @@
     <!-- Signup Link -->
     <p class="mt-6 text-center text-sm text-gray-600">
       Don’t have an account?
-      <a href="{% url 'users.signup' %}" class="text-indigo-600 hover:text-indigo-800 font-semibold">Sign Up</a>
+      <a href="{% url 'users:signup' %}" class="text-indigo-600 hover:text-indigo-800 font-semibold">Sign Up</a>
     </p>
   </div>
 </body>
