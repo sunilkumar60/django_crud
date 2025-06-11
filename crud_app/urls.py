@@ -11,6 +11,7 @@ urlpatterns = [
         # authentication routes
         path('login/', views.login, name="login"),
         path('signup/', views.signup, name="signup"),
+        path('logout/', views.auth_logout, name="logout"),
         # user CRUD routes
         path('list/', views.users, name="index"),
         path('create/', views.create, name="create"),

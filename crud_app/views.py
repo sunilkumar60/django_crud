@@ -3,11 +3,21 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User as Auth_User
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.contrib import messages
 from django.db.models import Q
 from .models import User, UserDetails
+from functools import wraps
 
 
+# decorator for redirect logged user to index 
+def redirect_authenticated_user(view_func):
+    @wraps(view_func) #the name, docstring, and metadata of the original view function (like login) are preserved.
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('users:index')
+        return view_func(request, *args, **kwargs)
+    return wrapper
 # Function to handle form data creation
 def handle_user_form(request, user=None):
     first_name = request.POST.get('first_name')
@@ -78,7 +88,7 @@ def updateUser(request, user_id):
 
     return render(request, 'users/update.html', {'user': user})
 
-
+@redirect_authenticated_user
 def login(request):
     if request.method == "POST":
         identifier = request.POST.get('username')
@@ -89,16 +99,18 @@ def login(request):
             user = authenticate(request, username=user.username, password=password)
             if user:
                 auth_login(request, user)
+                if request.POST.get('next'):
+                    return redirect(request.POST.get('next'))
                 return redirect("users:index")
             else:
                 messages.error(request, "Authentication failed. Please try again.")
         else:
             messages.error(request, "Invalid username or password.")
+            
         return redirect("users:login")
-
     return render(request, 'auth/login.html')
 
-
+@redirect_authenticated_user
 def signup(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -117,3 +129,7 @@ def signup(request):
         return redirect('users:index')
 
     return render(request, "auth/signup.html")
+
+def auth_logout(request):
+    logout(request)
+    return redirect('users:login')
