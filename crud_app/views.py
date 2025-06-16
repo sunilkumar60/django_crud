@@ -12,7 +12,7 @@ from functools import wraps
 
 # decorator for redirect logged user to index 
 def redirect_authenticated_user(view_func):
-    @wraps(view_func) #the name, docstring, and metadata of the original view function (like login) are preserved.
+    @wraps(view_func) #  @wraps the name, docstring, and metadata of the original view function (like login) are preserved.
     def wrapper(request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('users:index')
