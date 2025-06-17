@@ -88,6 +88,11 @@ def updateUser(request, user_id):
 
     return render(request, 'users/update.html', {'user': user})
 
+@login_required
+def updateProfile(request):
+    if request.method == "GET":
+        return render(request,'auth/edit_profile.html')
+
 @redirect_authenticated_user
 def login(request):
     if request.method == "POST":

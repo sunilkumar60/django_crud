@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Main Container -->
+  <div class="flex justify-center items-center min-h-screen px-4 space-x-10">
+
+    <!-- Profile Update Card -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg space-y-6">
+      <!-- Header Section -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-semibold text-gray-800">Update Profile</h2>
+        <a href="{% url 'users:index' %}" class="text-sm text-indigo-600 flex items-center hover:text-indigo-800 transition duration-200">
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </a>
+      </div>
+
+      <!-- Profile Update Form -->
+      <form action="" method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- First Name -->
+          <div>
+            <label for="first_name" class="text-sm font-medium text-gray-700">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+          <!-- Last Name -->
+          <div>
+            <label for="last_name" class="text-sm font-medium text-gray-700">Last Name</label>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+          <!-- Telephone -->
+          <div>
+            <label for="telephone" class="text-sm font-medium text-gray-700">Telephone</label>
+            <input type="tel" id="telephone" name="telephone" value="{{ user.telephone }}"
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+          <!-- Profile Picture -->
+          <div>
+            <label for="profile_picture" class="text-sm font-medium text-gray-700">Profile Picture</label>
+            <input type="file" id="profile_picture" name="profile_picture"
+                   class="mt-2 block w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 transition duration-200">
+          </div>
+          <!-- Country -->
+          <div>
+            <label for="country" class="text-sm font-medium text-gray-700">Country</label>
+            <input type="text" id="country" name="country" value="{{ user.country }} "
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+          <!-- State -->
+          <div>
+            <label for="state" class="text-sm font-medium text-gray-700">State</label>
+            <input type="text" id="state" name="state" value="{{ user.state }}"
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+          <!-- City -->
+          <div>
+            <label for="city" class="text-sm font-medium text-gray-700">City</label>
+            <input type="text" id="city" name="city" value="{{ user.city }}"
+                   class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-6 flex justify-end">
+          <button type="submit" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition duration-200">
+            <i class="fas fa-save mr-2"></i> Update Profile
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Password Change Card -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg space-y-6">
+      <h2 class="text-xl font-semibold text-gray-800">Change Password</h2>
+      <form action="" method="POST" class="space-y-6">
+        {% csrf_token %}
+        <!-- Current Password -->
+        <div>
+          <label for="current_password" class="text-sm font-medium text-gray-700">Current Password</label>
+          <input type="password" id="current_password" name="current_password" required
+                 class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 transition duration-200 shadow-sm">
+        </div>
+        <!-- New Password -->
+        <div>
+          <label for="new_password" class="text-sm font-medium text-gray-700">New Password</label>
+          <input type="password" id="new_password" name="new_password" required
+                 class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 transition duration-200 shadow-sm">
+        </div>
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirm_password" class="text-sm font-medium text-gray-700">Confirm New Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" required
+                 class="mt-2 block w-full px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 transition duration-200 shadow-sm">
+        </div>
+        <!-- Submit Button -->
+        <div class="pt-6 flex justify-end">
+          <button type="submit" class="inline-flex items-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition duration-200">
+            <i class="fas fa-key mr-2"></i> Change Password
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>

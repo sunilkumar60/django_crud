@@ -31,7 +31,7 @@
         </button>
         <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg text-gray-800 hidden">
           <ul>
-            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200">Profile</a></li>
+            <li><a href="{% url 'users:update.profile' %}" class="block px-4 py-2 text-sm hover:bg-gray-200">Profile</a></li>
             <li><a href="{% url 'users:logout' %}" class="block px-4 py-2 text-sm hover:bg-gray-200">Logout</a></li>
           </ul>
         </div>
